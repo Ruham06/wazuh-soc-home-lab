@@ -1,0 +1,6 @@
+ruham@Wazuh-Server:~$ sudo grep -nE '<rule[[:space:]]+id=' /var/ossec/etc/rules/powershell_abuse_rules.xml
+3:  <rule id="132300" level="8">
+13:  <rule id="132301" level="10">
+23:  <rule id="132302" level="8">
+33:  <rule id="132303" level="7">
+43:  <rule id="132304" level="6">
