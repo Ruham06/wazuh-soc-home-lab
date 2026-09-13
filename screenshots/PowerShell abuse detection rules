@@ -1,0 +1,53 @@
+ruham@Wazuh-Server:~$ sudo cat /var/ossec/etc/rules/powershell_abuse_rules.xml
+<group name="windows,powershell,powershell_abuse,">
+
+  <rule id="132300" level="8">
+    <if_sid>60009</if_sid>
+    <field name="win.system.message" type="pcre2">(?i)EncodedCommand|FromBase64String|-enc\b|-enco\b|-en\b</field>
+    <description>Encoded command executed via PowerShell.</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1027</id>
+    </mitre>
+  </rule>
+
+  <rule id="132301" level="10">
+    <if_sid>60009</if_sid>
+    <field name="win.system.message" type="pcre2">(?i)DownloadString|WebClient|Invoke-WebRequest|IEX|Invoke-Expression</field>
+    <description>Possible PowerShell download cradle or remote execution command detected.</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1105</id>
+    </mitre>
+  </rule>
+
+  <rule id="132302" level="8">
+    <if_sid>60009</if_sid>
+    <field name="win.system.message" type="pcre2">(?i)ExecutionPolicy\s+Bypass|-ExecutionPolicy\s+Bypass</field>
+    <description>PowerShell execution policy bypass detected.</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1562.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="132303" level="7">
+    <if_sid>60009</if_sid>
+    <field name="win.system.message" type="pcre2">(?i)-WindowStyle\s+Hidden|WindowStyle Hidden</field>
+    <description>PowerShell hidden window execution detected.</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1564.003</id>
+    </mitre>
+  </rule>
+
+  <rule id="132304" level="6">
+    <if_sid>60009</if_sid>
+    <field name="win.system.message" type="pcre2">(?i)blocked by your antivirus software|This script contains malicious content</field>
+    <description>Windows Security blocked malicious PowerShell command.</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+</group>
